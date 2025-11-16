@@ -169,12 +169,12 @@ export const STAGE3 = () => {
           const normalizedInput = normalizeSpaces(value).toLowerCase();
           const normalizedExpected = normalizeSpaces(expectedWeaponRaw).toLowerCase();
 
-          if (normalizedInput === normalizedExpected) {
-            currentStep = 2;
-            renderStep();
+          if (expectedWeapons.includes(normalizedInput)) {
+             currentStep = 2;
+             renderStep();
           } else {
-            showError("Incorrect. Restarting sequence.");
-            setTimeout(restartAll, 1000);
+             showError("Incorrect. Restarting sequence.");
+             setTimeout(restartAll, 1000);
           }
         } else if (currentStep === 2) {
           const nameInput = value.trim(); // case-sensitive compare
