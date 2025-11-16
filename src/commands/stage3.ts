@@ -19,7 +19,7 @@ export const STAGE3 = () => {
   stage3EndTime = Date.now() + STAGE3_DURATION_MS;
 
   const expectedCodonRaw = String(command.stage3Codon);
-  const expectedWeaponsRaw: string[] = Array.isArray(command.stage3Weapons)
+  const expectedWeaponRaw: string[] = Array.isArray(command.stage3Weapons)
   ? command.stage3Weapons.map(w => w.toLowerCase().trim())
   : []; // fallback
   const nameOptions: string[] = Array.isArray(command.stage3Names)
