@@ -7,7 +7,7 @@
   "stage1Code": "itg", 
   "stage2Code": "411214121141663565",
   "stage3Codon": "UUU GCU AAU GGU",
-  "stage3Weapon": "gun, pistol",
+  "stage3Weapons": ["gun", "pistol"],
   "stage3Names": [
     "Daimian Nevrag",
     "Kaelen Dravik",

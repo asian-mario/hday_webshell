@@ -18,21 +18,15 @@ export const STAGE3 = () => {
   stage3Running = true;
   stage3EndTime = Date.now() + STAGE3_DURATION_MS;
 
-  const expectedCodonRaw = String(command.stage3Codon ?? "UUU GCU AAU GGU");
-  const expectedWeaponRaw = String(command.stage3Weapon ?? "gun, pistol");
+  const expectedCodonRaw = String(command.stage3Codon);
+  const expectedWeapons: string[] = Array.isArray(command.stage3Weapons)
+  ? command.stage3Weapons.map(w => w.toLowerCase().trim())
+  : []; // fallback
   const nameOptions: string[] = Array.isArray(command.stage3Names)
-    ? command.stage3Names
-    : [
-        "Daimian Nevrag",
-        "Kaelen Dravik",
-        "Taren Vossar",
-        "Luci Merath",
-        "Rynar Valech",
-        "Eldric Navar",
-        "Corvin Dareth",
-        "Ardian Krellin",
-      ];
-  const correctName = String(command.stage3CorrectName ?? "Daimian Nevrag");
+  ? command.stage3Names
+  : [];
+  const correctName = String(command.stage3CorrectName);
+
 
   const normalizeSpaces = (s: string) =>
     s.trim().replace(/\s+/g, " ");
