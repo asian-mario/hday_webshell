@@ -167,14 +167,17 @@ export const STAGE3 = () => {
           }
         } else if (currentStep === 1) {
           const normalizedInput = normalizeSpaces(value).toLowerCase();
-          const normalizedExpected = normalizeSpaces(expectedWeaponRaw).toLowerCase();
 
-          if (expectedWeapons.includes(normalizedInput)) {
-             currentStep = 2;
-             renderStep();
+          const normalizedExpectedWeapons = expectedWeaponRaw.map(w =>
+            normalizeSpaces(w).toLowerCase()
+          );
+
+          if (normalizedExpectedWeapons.includes(normalizedInput)) {
+            currentStep = 2;
+            renderStep();
           } else {
-             showError("Incorrect. Restarting sequence.");
-             setTimeout(restartAll, 1000);
+            showError("Incorrect. Restarting sequence.");
+            setTimeout(restartAll, 1000);
           }
         } else if (currentStep === 2) {
           const nameInput = value.trim(); // case-sensitive compare

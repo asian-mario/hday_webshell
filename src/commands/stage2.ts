@@ -1,7 +1,7 @@
 // src/commands/stage2.ts
 import command from "../../config.json" assert { type: "json" };
 import { STAGE3 } from "./stage3.ts";
-import { lockInput, unlockInput } from "../main";
+import { lockInput, unlockInput, set3 } from "../main";
 
 export const STAGE2 = () => {
   lockInput();
@@ -51,9 +51,22 @@ export const STAGE2 = () => {
 
   const finishCorrect = () => {
     cleanup();
-    // Immediately advance to stage 3 – no going back to normal prompt
-    STAGE3();
+    printLine(`<span class="output">Playing audio...</span>`);
+
+    const audio = new Audio("/command_asset/2.mp3");
+    audio.play()
+      .then(() => {
+        audio.onended = () => {
+          STAGE3();
+        };
+      })
+      .catch((err) => {
+        console.error("Failed to play audio:", err);
+        printLine(`<span class="output">Error: could not play audio.</span>`);
+        STAGE3();
+      });
   };
+
 
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
