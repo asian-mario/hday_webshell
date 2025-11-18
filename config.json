@@ -19,6 +19,9 @@
     "Ardian Krellin"
   ],
   "stage3CorrectName": "Daimian Nevrag",
+  "exitCode": "FANG",
+  "killerAnswers": ["government", "the government"],
+  "killerSuccessLine": "if you’re reading this, you’ve cracked the code, impressive. \n But you never stood a chance. \n I am the system – and the system…always…wins",
 
   "social": {
     "email": "your@email.com",

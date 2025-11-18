@@ -1,10 +1,11 @@
 // src/commands/stage4.ts
+import command from "../../config.json" assert { type: "json" };
 import { lockInput, unlockInput, epilogueUnset, writeLines } from "../main";
 
 export const STAGE4 = (
   parent: HTMLElement,
   writeLinesAnchor: HTMLElement,
-  timerDiv: HTMLElement // kept for future use if needed
+  _timerDiv: HTMLElement // kept for future use if needed
 ) => {
   lockInput();
 
@@ -28,7 +29,14 @@ export const STAGE4 = (
   wrapper.className = "stage4-wrapper";
   parent.insertBefore(wrapper, writeLinesAnchor);
 
-  let step = 0; // 0 = pick option, 1 = stay/leave
+  let step = 0; // 0 = pick option, 1 = follow-up (exit code / tracker / killer)
+  let mode: "none" | "exitCode" | "tracker" | "killer" = "none";
+
+  const exitCodeExpected = String(command.exitCode); // e.g. "FANG"
+  const killerAnswers: string[] = Array.isArray(command.killerAnswers)
+    ? command.killerAnswers
+    : [];
+  const killerLine = String(command.killerSuccessLine ?? "");
 
   const finalize = () => {
     if (wrapper.parentElement) wrapper.parentElement.removeChild(wrapper);
@@ -39,12 +47,22 @@ export const STAGE4 = (
   const showEndingLeave = () => {
     printLine(`<br>`);
     writeBlock(`
-For the team that has left.
-You slump into your chair, the cold realization settling in like ice in your veins. 
-The game, the clues, the search for the killer — it was never about survival. E
-scape was an illusion. Either you die... or die trying.
-
-There is no escape. He is always ahead.
+You slump into your chair, the cold realization settling in like ice in your veins. The game, the clues, the search for the killer — 
+it was never about survival. Escape was an illusion. 
+Either you die... or die trying.
+There is no escape. He is always ahead, a shadow behind every move you make…It’s The Government(ITG), the true predator. 
+Every team that came before you, every message intercepted, every hidden clue... it was all orchestrated. His hunt leaves no loose ends. 
+No opposition survives.
+And now you understand. The murderer you sought to catch was never tangible. It was him. 
+The system. The hand guiding every trap, every false lead, every staged death. He frames, he manipulates, he hunts. 
+He is always the hero in the story he writes - and you were always just another pawn.
+A soft click echoes from the door. Your heartbeat spikes. Someone enters. At first, you think it's your teammate - your last ally.
+But its presence remained dark. The posture, the quiet confidence, the inevitability of it all. 
+Your skin prickles. This is not someone you know.
+Before you can react, the same cold precision strikes. The method is identical, the same as the others - swift, deliberate, inescapable. 
+Darkness creeps in, swallowing the room, swallowing you. 
+The last thought in your mind is the same one that must have crossed every other team's: 
+sthere is no escape.
     `);
     finalize();
   };
@@ -54,7 +72,8 @@ There is no escape. He is always ahead.
     writeBlock(`
 In your final moments, drifting between reality and darkness, you see him - the hunter- perfectly concealed in the shadows. 
 His eyes, sharp and cold, fixed onto your own, almost mocking your stubbornness, your foolish pride.
-"How could I have been so careless?" you think. The people you trusted the most... the ones you worked with, the ones you cared for... all illusions.
+"How could I have been so careless?" you think. The people you trusted the most... the ones you worked with, 
+the ones you cared for... all illusions.
 Why haven’t they left yet? The first half of my team. What can they do against an opponent who moves in the shadows, wields the skill of the agency's top operatives, 
 and hides so completely that he doesn't even exist?
 One last glance, and the truth hits you like a blade. “It's been you all along.” The hunter, the killer, the orchestrator of every death, every trap... 
@@ -62,6 +81,21 @@ it’s the government(ITG) itself. The system no one can beat.
     `);
     finalize();
   };
+  
+  const epilogueLine = () => {
+    printLine(`<br>`)
+    writeBlock(`Transmission...`)
+    printLine(`<br>`)
+    writeBlock(`
+      "P ibpsa aol zfzalt av wyvalja jvuayvs. Uvd P't ivbuk if pa. 
+      Pa hkhwaz, pa klzayvfz, pa ylibpskz - 
+      huk pa dlhyz tl sprl h kpzwvzhisl thzr." 
+      - pt zvyyf, Khptphu Ulcyhn 
+      (Nvclyuvy Uhptphk)
+      
+      `);
+      finalize();
+  }
 
   const renderStep = () => {
     wrapper.innerHTML = ""; // clear previous contents
@@ -84,8 +118,14 @@ it’s the government(ITG) itself. The system no one can beat.
         `<span class="output">4. "..."</span>`
       ].join("<br>");
     } else if (step === 1) {
-      // Second prompt: stay/leave
-      label.innerHTML = `<span class="output">Will your outside team leave? (stay/leave)</span>`;
+      if (mode === "exitCode") {
+        label.innerHTML = `<span class="output">Enter exit code:</span>`;
+      } else if (mode === "tracker") {
+        label.innerHTML = `<span class="output">did you find the tracker? (y/n)</span>`;
+      } else if (mode === "killer") {
+        // 🔹 Option 4 follow-up prompt
+        label.innerHTML = `<span class="output">You should have realized by now...<br>Who is the killer?</span>`;
+      }
     }
 
     wrapper.appendChild(label);
@@ -97,7 +137,8 @@ it’s the government(ITG) itself. The system no one can beat.
       if (e.key !== "Enter") return;
       e.preventDefault();
 
-      const val = input.value.trim().toLowerCase();
+      const raw = input.value.trim();
+      const val = raw.toLowerCase();
 
       // Step 0: Pick 1/2/3/4
       if (step === 0) {
@@ -106,33 +147,95 @@ it’s the government(ITG) itself. The system no one can beat.
           return;
         }
 
-        if (val === "3" || val === "4") {
-          printLine(
-            `<span class="output">This option will be implemented later.</span>`
-          );
+        if (val === "1") {
+          // Choice 1: always leaving ending
+          showEndingLeave();
+          epilogueLine();
+          return;
+        }
+
+        if (val === "2") {
+          // Choice 2: exit code check
+          mode = "exitCode";
+          step = 1;
+          renderStep();
+          return;
+        }
+
+        if (val === "3") {
+          // Choice 3: tracker y/n → epilogue1/2
+          mode = "tracker";
+          step = 1;
+          renderStep();
+          return;
+        }
+
+        if (val === "4") {
+          // 🔹 Choice 4: "You should have realized..." → killer question
+          mode = "killer";
+          step = 1;
+          renderStep();
+          return;
+        }
+
+        return;
+      }
+
+      // Step 1: exit code / tracker / killer
+      if (step === 1) {
+        if (mode === "exitCode") {
+          // Compare to exitCode from config (case-insensitive)
+          if (raw.toUpperCase() === exitCodeExpected.toUpperCase()) {
+            showEndingLeave();
+            epilogueLine();
+          } else {
+            showEndingStay();
+            epilogueLine();
+          }
+          return;
+        }
+
+        if (mode === "tracker") {
+          if (val === "y") {
+            // found tracker → epilogue1
+            showEndingLeave();
+            epilogueLine();
+            return;
+          }
+          if (val === "n") {
+            // no tracker → epilogue2
+            showEndingStay();
+            epilogueLine();
+            return;
+          }
+
+          // invalid input, ask again
           input.value = "";
           return;
         }
 
-        // If option 1 or 2:
-        step = 1;
-        renderStep(); // re-render with new prompt + new line for input
-        return;
-      }
+        if (mode === "killer") {
+          // normalize answers
+          const normalizedAnswers = killerAnswers.map((a) =>
+            a.toLowerCase().trim()
+          );
 
-      // Step 1: stay/leave
-      if (step === 1) {
-        if (val === "leave") {
-          showEndingLeave();
+          if (normalizedAnswers.includes(val)) {
+            // correct → special line then stay ending
+            if (killerLine) {
+              printLine(
+                `<span class="output">${killerLine}</span>`
+              );
+            }
+            showEndingStay();
+            epilogueLine();
+          } else {
+            // wrong → leave ending
+            showEndingLeave();
+            epilogueLine();
+          }
           return;
         }
-        if (val === "stay") {
-          showEndingStay();
-          return;
-        }
-
-        input.value = "";
-        return;
       }
     });
   };
