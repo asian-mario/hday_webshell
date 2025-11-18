@@ -220,6 +220,7 @@ function commandHandler(input : string) {
           TERMINAL.innerHTML = "";
           TERMINAL.appendChild(WRITELINESCOPY);
           mutWriteLines = WRITELINESCOPY;
+          globalLineIndex = 0;
         })
         break;
       case 'banner':
@@ -333,9 +334,10 @@ function commandHandler(input : string) {
   }  
 }
 
+let globalLineIndex = 0;
 export function writeLines(message : string[]) {
-  message.forEach((item, idx) => {
-    displayText(item, idx);
+  message.forEach((item) => {
+    displayText(item, globalLineIndex++);
   });
 }
 

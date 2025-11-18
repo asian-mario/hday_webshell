@@ -64,6 +64,7 @@ Darkness creeps in, swallowing the room, swallowing you.
 The last thought in your mind is the same one that must have crossed every other team's: 
 sthere is no escape.
     `);
+    printLine(`<br>`);
     finalize();
   };
 
@@ -79,6 +80,7 @@ and hides so completely that he doesn't even exist?
 One last glance, and the truth hits you like a blade. “It's been you all along.” The hunter, the killer, the orchestrator of every death, every trap... 
 it’s the government(ITG) itself. The system no one can beat.
     `);
+    printLine(`<br>`);
     finalize();
   };
   
