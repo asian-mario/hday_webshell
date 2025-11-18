@@ -1,7 +1,7 @@
 // src/commands/stage2.ts
 import command from "../../config.json" assert { type: "json" };
 import { STAGE3 } from "./stage3.ts";
-import { lockInput, unlockInput, set3 } from "../main";
+import { lockInput, unlockInput, set3, writeLines } from "../main";
 
 export const STAGE2 = () => {
   lockInput();
@@ -41,19 +41,14 @@ export const STAGE2 = () => {
   const finishWrong = () => {
     unlockInput();
     cleanup();
-    printLine(`<span class="output">what seems out of order… isn’t</span>`);
-    const audio = new Audio("/command_asset/2.mp3");
-    audio.play().catch((err) => {
-      console.error("Failed to play audio:", err);
-      printLine(`<span class="output">Error: could not play audio.</span>`);
-    });
+    writeLines(["What seems out of order isn't.", "<br>"]);
   };
 
   const finishCorrect = () => {
     cleanup();
     printLine(`<span class="output">Playing audio...</span>`);
 
-    /*const audio = new Audio("/command_asset/2.mp3");
+    const audio = new Audio("/command_asset/2.mp3");
     audio.play()
       .then(() => {
         audio.onended = () => {
@@ -64,7 +59,7 @@ export const STAGE2 = () => {
         console.error("Failed to play audio:", err);
         printLine(`<span class="output">Error: could not play audio.</span>`);
         STAGE3();
-      });*/
+      });
     
     STAGE3();
   };
