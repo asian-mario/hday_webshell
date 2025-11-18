@@ -117,7 +117,7 @@ it’s the government(ITG) itself. The system no one can beat.
         `<span class="output">1. Send information to the government</span>`,
         `<span class="output">2. Don't send the information</span>`,
         `<span class="output">3. Find the tracking device</span>`,
-        `<span class="output">4. "..."</span>`
+        `<span class="output">4. "...so you know who I really am"</span>`
       ].join("<br>");
     } else if (step === 1) {
       if (mode === "exitCode") {
