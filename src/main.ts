@@ -308,6 +308,9 @@ function commandHandler(input : string) {
           writeLines(["and so do you.", "<br>"])
         }
         break;
+      case 'moreinfo':
+        writeLines(["made by rangga.", "<br>"])
+        break;
       default:
         if(bareMode) {
           writeLines(["type 'help'", "<br>"])
