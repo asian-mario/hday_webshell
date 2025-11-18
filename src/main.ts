@@ -7,6 +7,7 @@ import { PROJECTS } from "./commands/projects";
 import { createWhoami } from "./commands/whoami";
 import { STAGE1 } from "./commands/stage1";
 import { STAGE2 } from './commands/stage2';
+import { SLEEPBANNER } from './commands/sleep';
 
 
 //mutWriteLines gets deleted and reassigned
@@ -310,6 +311,10 @@ function commandHandler(input : string) {
         break;
       case 'moreinfo':
         writeLines(["made by rangga.", "<br>"])
+        break;
+
+      case `letmesleep`:
+        writeLines(SLEEPBANNER);
         break;
       default:
         if(bareMode) {
