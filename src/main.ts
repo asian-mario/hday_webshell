@@ -314,12 +314,12 @@ function commandHandler(input : string) {
   } else if(inStage3) {
     writeLines(["there is no turning back. (do not refresh. all progress will be lost.)", "<br>"])
     if(epilogue == true){
-      writeLines(["Commands: stage4"])
+      writeLines(["choose wisely.", "<br>"])
     }
   }  
 }
 
-function writeLines(message : string[]) {
+export function writeLines(message : string[]) {
   message.forEach((item, idx) => {
     displayText(item, idx);
   });

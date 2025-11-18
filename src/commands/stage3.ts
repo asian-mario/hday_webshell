@@ -2,6 +2,7 @@
 import command from "../../config.json" assert { type: "json" };
 import { lockInput, unlockInput, set3, unset3, epilogueSet, epilogueUnset } from "../main";
 const STAGE3_DURATION_MS = 10 * 60 * 1000; // 10 minutes
+import { STAGE4 } from "./stage4";
 
 let stage3Running = false;
 let timerId: number | null = null;
@@ -182,9 +183,18 @@ export const STAGE3 = () => {
         } else if (currentStep === 2) {
           const nameInput = value.trim(); // case-sensitive compare
           if (nameInput === correctName) {
-            // Success: all three correct
-            epilogueSet();
-            stopStage3("ACCESS GRANTED.");
+              epilogueSet();
+
+              // DO NOT stop the timer
+              // DO NOT remove wrapper
+              // DO NOT clear stage3Running
+
+              // Simply clear stage3 inputs and move to Stage 4
+              wrapper.innerHTML = "";
+              printLine(`<span class="output">ACCESS GRANTED.</span>`);
+
+              STAGE4(parent, writeLinesAnchor, timerDiv);
+              return;
           } else {
             showError("Incorrect. Restarting sequence.");
             setTimeout(restartAll, 1000);

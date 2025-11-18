@@ -53,7 +53,7 @@ export const STAGE2 = () => {
     cleanup();
     printLine(`<span class="output">Playing audio...</span>`);
 
-    const audio = new Audio("/command_asset/2.mp3");
+    /*const audio = new Audio("/command_asset/2.mp3");
     audio.play()
       .then(() => {
         audio.onended = () => {
@@ -64,7 +64,9 @@ export const STAGE2 = () => {
         console.error("Failed to play audio:", err);
         printLine(`<span class="output">Error: could not play audio.</span>`);
         STAGE3();
-      });
+      });*/
+    
+    STAGE3();
   };
 
 
