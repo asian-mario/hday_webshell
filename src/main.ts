@@ -302,6 +302,12 @@ function commandHandler(input : string) {
           writeLines(["Permission not granted.", "<br>"]);
         }
         break;
+      case 'snoopy':
+        writeLines(["i love snoopy", "<br>"]);
+        if(bareMode) {
+          writeLines(["and so do you.", "<br>"])
+        }
+        break;
       default:
         if(bareMode) {
           writeLines(["type 'help'", "<br>"])
