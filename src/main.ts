@@ -314,9 +314,13 @@ function commandHandler(input : string) {
         writeLines(["made by rangga.", "<br>"])
         break;
 
-      case `letmesleep`:
+      case 'letmesleep':
         writeLines(SLEEPBANNER);
         break;
+      case 'kris':
+          writeLines(["69 20 6C 69 6B 65 20 66 72 65 6E 63 68 20 6D 65 6E", "<br>"])
+          writeLines(["decode for a special secret.", "<br>"])
+          break;
       default:
         if(bareMode) {
           writeLines(["type 'help'", "<br>"])
