@@ -321,6 +321,9 @@ function commandHandler(input : string) {
           writeLines(["69 20 6C 69 6B 65 20 66 72 65 6E 63 68 20 6D 65 6E", "<br>"])
           writeLines(["decode for a special secret.", "<br>"])
           break;
+      case 'olive-er':
+          writeLines(["clue: i'm not in the escape room", "<br>"])
+          break;
       default:
         if(bareMode) {
           writeLines(["type 'help'", "<br>"])
