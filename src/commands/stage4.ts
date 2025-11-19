@@ -63,6 +63,7 @@ Before you can react, the same cold precision strikes. The method is identical, 
 Darkness creeps in, swallowing the room, swallowing you. 
 The last thought in your mind is the same one that must have crossed every other team's: 
 sthere is no escape.
+299
     `);
     printLine(`<br>`);
     finalize();
@@ -79,6 +80,7 @@ Why haven’t they left yet? The first half of my team. What can they do against
 and hides so completely that he doesn't even exist?
 One last glance, and the truth hits you like a blade. “It's been you all along.” The hunter, the killer, the orchestrator of every death, every trap... 
 it’s the government(ITG) itself. The system no one can beat.
+299
     `);
     printLine(`<br>`);
     finalize();
